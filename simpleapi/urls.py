@@ -16,15 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from usersapimixin.views import UserMixinList, UserMixinDetail
+from usersapimixin.views import UserMixinList, UserMixinDetail, UserDetail, UserUpdate, UserCreate, UserDelete, UserDtoDetail, User
 
 from usersapi.views import UserList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('usersapi.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+
     path('allusers/', UserMixinList.as_view(), name='usermixin-list'),
     path('allusers/<int:pk>', UserMixinDetail.as_view(), name='usermixin-detail'),
+    path('user/<int:pk>', UserDetail.as_view(), name='user-detail'),
+    path('userup/<int:pk>', UserUpdate.as_view(), name='user-up'),
+    path('new', UserCreate.as_view(), name='new'),
+    path('delete/<int:pk>', UserDelete.as_view(), name='delete'),
+    path('userdto/<int:pk>', UserDtoDetail.as_view(), name='get'),
+
 
     # path('userlist/', UserList.as_view, name='userlist'),
 
